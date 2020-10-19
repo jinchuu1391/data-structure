@@ -34,60 +34,62 @@ class Set {
   values() {
     return Object.keys(this.items);
   }
-  union(otherSet) {
-    // 합집합 -> 두 집합 중 어느 한쪽이라도 포함된 원소로 구성된 집합을 구한다
-    let unionSet = new Set(); // 합집합을 담을 변수 생성
-    let values = this.values();
-    for (let i = 0; i < values.length; i++) {
-      // 현재 인스턴스(첫 번째 set)의 원소를 결과 변수에 담는다
-      unionSet.add(values[i]);
-    }
-    values = otherSet.values();
-    for (let i = 0; i < values.length; i++) {
-      // otherSet(두 번째 set)의 원소를 결과 변수에 담는다
-      unionSet.add(values[i]);
-    }
-    return unionSet;
-  }
-  intersection(otherSet) {
-    // 교집합 -> 두 집합 모두 포함되어 있는 원소로 구성된 집합을 구한다
-    let intersectionSet = new Set(); // 교집합을 담을 변수 생성
-    let values = this.values();
-    for (let i = 0; i < values.length; i++) {
-      // 현재 인스턴스(첫 번째 set)에도 있고,
-      if (otherSet.has(values[i])) {
-        // otherSet(두 번째 set)도 가지고 있는 원소라면
-        intersectionSet.add(values[i]); // 결과변수에 담는다
-      }
-    }
-    return intersectionSet;
-  }
-  difference(otherSet) {
-    // 차집합 -> 첫 번째 집합에는 있지만 두 번째 집합에는 없는 원소로 구성된 집합을 구한다
-    let differenceSet = new Set(); // 차집합을 담을 변수 생성
-    let values = this.values();
-    for (let i = 0; i < values.length; i++) {
-      // 현재 인스턴스(첫 번째 set)에는 있지만,
-      if (!otherSet.has(values[i])) {
-        // otherSet에는 없는 원소일 경우
-        differenceSet.add(values[i]); // 결과변수에 담는다
-      }
-    }
-    return differenceSet;
-  }
-  subSet(otherSet) {
-    // 부분집합 -> 어떤 집합이 다른 집합의 일부인지 확인한다
-    if (this.size() > otherSet.size()) {
-      return false;
-    } else {
-      let values = this.values();
-      for (let i = 0; i < values.length; i++) {
-        // 현재 인스턴스의 원소가 otherSet에도 존재하는지 확인한다
-        if (!otherSet.has(values[i])) {
-          return false; // 하나라도 otherSet에 존재하지 않으면 부분집합이 아니므로 false를 반환
-        }
-      }
-      return true;
-    }
-  }
 }
+
+Set.prototype.union = function (otherSet) {
+  // 합집합 -> 두 집합 중 어느 한쪽이라도 포함된 원소로 구성된 집합을 구한다
+  let unionSet = new Set(); // 합집합을 담을 변수 생성
+  let values = this.values();
+  for (let i = 0; i < values.length; i++) {
+    // 현재 인스턴스(첫 번째 set)의 원소를 결과 변수에 담는다
+    unionSet.add(values[i]);
+  }
+  values = otherSet.values();
+  for (let i = 0; i < values.length; i++) {
+    // otherSet(두 번째 set)의 원소를 결과 변수에 담는다
+    unionSet.add(values[i]);
+  }
+  return unionSet;
+};
+
+Set.prototype.intersection = function (otherSet) {
+  // 교집합 -> 두 집합 모두 포함되어 있는 원소로 구성된 집합을 구한다
+  let intersectionSet = new Set(); // 교집합을 담을 변수 생성
+  let values = this.values();
+  for (let i = 0; i < values.length; i++) {
+    // 현재 인스턴스(첫 번째 set)에도 있고,
+    if (otherSet.has(values[i])) {
+      // otherSet(두 번째 set)도 가지고 있는 원소라면
+      intersectionSet.add(values[i]); // 결과변수에 담는다
+    }
+  }
+  return intersectionSet;
+};
+Set.prototype.difference = function (otherSet) {
+  // 차집합 -> 첫 번째 집합에는 있지만 두 번째 집합에는 없는 원소로 구성된 집합을 구한다
+  let differenceSet = new Set(); // 차집합을 담을 변수 생성
+  let values = this.values();
+  for (let i = 0; i < values.length; i++) {
+    // 현재 인스턴스(첫 번째 set)에는 있지만,
+    if (!otherSet.has(values[i])) {
+      // otherSet에는 없는 원소일 경우
+      differenceSet.add(values[i]); // 결과변수에 담는다
+    }
+  }
+  return differenceSet;
+};
+Set.prototype.subSet = function (otherSet) {
+  // 부분집합 -> 어떤 집합이 다른 집합의 일부인지 확인한다
+  if (this.size() > otherSet.size()) {
+    return false;
+  } else {
+    let values = this.values();
+    for (let i = 0; i < values.length; i++) {
+      // 현재 인스턴스의 원소가 otherSet에도 존재하는지 확인한다
+      if (!otherSet.has(values[i])) {
+        return false; // 하나라도 otherSet에 존재하지 않으면 부분집합이 아니므로 false를 반환
+      }
+    }
+    return true;
+  }
+};
