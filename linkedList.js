@@ -20,7 +20,7 @@ class LinkedList {
     this.length++;
   }
 
-  removeAt = function (position) {
+  removeAt(position) {
     //삭제할 원소의 위치를 인자로 받음
     if (position > -1 && position < this.length) {
       //위치 값이 유효한지 확인(유효하지 않으면 null 반환)
@@ -43,7 +43,7 @@ class LinkedList {
     } else {
       return null;
     }
-  };
+  }
 
   insert(position, element) {
     if (position >= 0 && position <= this.length) {
@@ -117,3 +117,5 @@ LinkedList.prototype.Node = class {
     this.next = null;
   }
 };
+
+module.exports = LinkedList;
